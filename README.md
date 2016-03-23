@@ -31,13 +31,16 @@ Files are also on [github][].
 
 3. Load the dictionaries and mappings e.g. add the following to your .vimrc:
   
-    Vedict load edict edict
-    Vedict load enamdict edict
-    nmap <c-l> :Vedict toggle<cr>
-    vmap <c-l> y:Vedict grep "<c-r>"" edict<cr>
-    vmap <c-s-l> y:Vedict grep ".*<c-r>"" edict<cr>
-    vmap <c-n> y:Vedict grep <c-r>" enamdict<cr>
-    vmap <c-s-n> y:Vedict grep ".*<c-r>"" enamdict<cr>
+``` 
+Vedict load edict edict
+Vedict load enamdict edict
+nmap <c-l> :Vedict toggle<cr>
+vmap <c-l> y:Vedict grep "<c-r>"" edict<cr>
+vmap <c-s-l> y:Vedict grep ".*<c-r>"" edict<cr>
+vmap <c-n> y:Vedict grep <c-r>" enamdict<cr>
+vmap <c-s-n> y:Vedict grep ".*<c-r>"" enamdict<cr>
+``` 
+    
 
 # Configuration Files
 
