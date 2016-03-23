@@ -7,11 +7,11 @@ Glynne Evans
 This vim plugin provides fast Japanese-to-English and English-to-Japanese
 dictionary lookup using files available from the [EDICT][] project.
 
-Files are also [GITHUB][on github].
+Files are also on [github][].
 
 [EDICT]: http://www.edrdg.org/jmdict/edict.html
 
-[GITHUB]: https://github.com/gglynne/vedict
+[github]: https://github.com/gglynne/vedict
 
 # Requirements
 
