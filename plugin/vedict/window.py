@@ -273,7 +273,14 @@ class ResultsWindow(Window):
 
     def appendResult(self,r,enc):
         self._results.append(r)
-        self.append(r.__repr__().encode(enc))
+
+        # 2017-11-21: workaround for neovim
+        lines = r.__repr__().encode(enc).split('\n')
+        for l in lines:
+            if l:
+                self.append(l)
+        # ----------------------------------
+
         for cmd in r.hi(self.groups):
             try:
                 vim.command(cmd.encode(enc))
