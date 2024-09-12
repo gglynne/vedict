@@ -1,9 +1,11 @@
 import os, re, codecs, urllib, gzip
 import config
+import urllib.request
 
 def wget(url, enc_in, path_out, enc_out):
     """ fetch a gz file, unpack it,  re-encode to disk"""
-    filename, headers = urllib.urlretrieve(url)
+    #  filename, headers = urllib.urlretrieve(url)
+    filename, headers = urllib.request.urlretrieve(url)
     with gzip.open(filename) as fp_in, codecs.open(path_out,'w',enc_out) as fp_out:
         line = fp_in.readline()
         while line:
@@ -24,16 +26,20 @@ class ManagerBackend(dict):
         path = os.path.join(config.default_dic_path,name)
         if not os.path.exists(path):
             print("Downloading %s..." % url)
-            import vim
-            vim.command("redraw")
+            #  import vim
+            #  vim.command("redraw")
             wget(url,'euc-jp', path, 'euc-jp')
 
     def getdics(self):
         """Check for config dir, create it and grab default dictionaries if required"""
         if not os.path.exists(config.default_dic_path):
             os.mkdir(config.default_dic_path)
-        self.wget('http://ftp.monash.edu.au/pub/nihongo/edict.gz','edict')
-        self.wget('http://ftp.monash.edu.au/pub/nihongo/enamdict.gz','enamdict')
+        #  self.wget('http://ftp.monash.edu.au/pub/nihongo/edict.gz','edict')
+        self.wget('http://ftp.edrdg.org/pub/Nihongo/edict.gz','edict')
+        #  self.wget('http://ftp.monash.edu.au/pub/nihongo/enamdict.gz','enamdict')
+        self.wget('http://ftp.edrdg.org/pub/Nihongo/enamdict.gz','enamdict')
+
+
 
 
 
