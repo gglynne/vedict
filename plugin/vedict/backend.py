@@ -64,7 +64,6 @@ class ManagerBackend(dict):
             self.batches=batch
         else:
             self.batches=config.batches
-        pass
 
     def fetch(self):
         yielded=0
@@ -72,7 +71,8 @@ class ManagerBackend(dict):
         while self._iterators and yielded>0:
             for i in self._iterators:
                 try:
-                    yield i.next()
+                    #  yield i.next()
+                    yield next(i)
                     yielded=yielded-1
                 except StopIteration:
                     self._iterators.remove(i)
@@ -81,7 +81,7 @@ class ManagerBackend(dict):
     def unload(self, name):
         """ Unregister a dictionary """
         if not self.has_key(name):
-            print "Dictionary not found."
+            print ("Dictionary not found.")
         else:
             self.pop(name)
         pass

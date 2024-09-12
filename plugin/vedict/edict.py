@@ -78,7 +78,8 @@ class Edict(object):
 			index_char=tail[0]
 		if self.index==None:
 			offset=0
-		elif index_char==None or not self.index.has_key(index_char):
+		#  elif index_char==None or not self.index.has_key(index_char):
+		elif index_char==None or not index_char in self.index:
 			i=random.randint(0,len(self.index.values())-1)
 			offset=self.index.values()[i]
 		else:
@@ -87,7 +88,7 @@ class Edict(object):
 		regex=re.compile(pattern,flags)
 
 		if self.fp==None:
-			self.fp=open(self.path, 'r')
+			self.fp=open(self.path, mode='r',encoding=self.FILE_ENCODING)
 		self.fp.seek(offset)
 
 		indexed=True
@@ -96,10 +97,10 @@ class Edict(object):
 		matched=False
 		while True:
 			pos=self.fp.tell()
-			raw=self.fp.readline()
+			line=self.fp.readline()
 			if wrapped and self.fp.tell() > offset:
 				break
-			line=raw.decode(self.FILE_ENCODING)
+			#  line=raw.decode(self.FILE_ENCODING)
 			if not line:
 				self.fp.seek(0)
 				wrapped=True
@@ -107,18 +108,18 @@ class Edict(object):
 				matched=True
 				yield EdictResult(self,offset,line)
 			elif (not wildcard) and matched:
-				print 'breaking'
+				print ('breaking')
 				break
 		pass
 
 	def save_index(self,limit=None):
-		fp=open(self.path_index,'w')
+		fp=open(self.path_index,mode='wb')
 		pickle.dump(self.index,fp)
 		fp.close()
 
 	def load_index(self,limit=None):
 		if os.path.exists(self.path_index):
-			fp=open(self.path_index,'r')
+			fp=open(self.path_index,mode='rb')
 			self.index=pickle.load(fp)
 			fp.close()
 		pass
@@ -132,7 +133,7 @@ class Edict(object):
 			if not line:
 				break
 			key=line[0]
-			if not self.index.has_key(key):
+			if not key in self.index:
 				self.index[key]=offset
 			if limit:
 				limit=limit-1
@@ -143,8 +144,8 @@ class Edict(object):
 		for key in self.index.keys():
 			offset=self.index[key]
 			fp.seek(offset)
-			raw=fp.readline()
-			line=raw.decode(self.FILE_ENCODING)
+			line=fp.readline()
+			#  line=raw.decode(self.FILE_ENCODING)
 			if limit:
 				limit=limit-1
 				if limit==0:
@@ -159,7 +160,7 @@ class Edict(object):
 		dic=Edict(path,fname)
 		dic.load_index()
 		for r in dic.grep('.*漢字'.decode(enc)):
-			print r.__repr__().encode(enc)
+			print (r.__repr__().encode(enc))
 		pass
 
 class GrepResult(list):
@@ -226,6 +227,6 @@ class GrepFile(object):
 		path=os.path.join(default_dic_path,fname)
 		dic=GrepFile(path,fname)
 		for r in dic.grep('.*漢字'.decode(enc)):
-			print r.__repr__().encode(enc)
+			print (r.__repr__().encode(enc))
 		pass
 pass

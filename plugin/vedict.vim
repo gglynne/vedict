@@ -1,6 +1,6 @@
 
 
-let dbg=0
+let dbg=1
 
 if dbg 
 	" F5 will rerun this script after it has been sourced
@@ -8,16 +8,18 @@ if dbg
 else
 	if exists("g:vedict_loaded") | finish | endif
 endif
-let g:vedict_loaded=1
+let g:vedict_loaded=0
 
 python << EOF
 #  lets python ignore everything above this line (docstring). """
 
 import vim, os
+from importlib import reload
+
 dbg=vim.eval('dbg')
 
 if not dbg:
-    print 'put production initializer here'
+    print( 'put production initializer here')
     vim.command('finish')
 
 # nobble path for libs
@@ -35,6 +37,9 @@ reload(edict)
 
 import ui
 reload(ui)
+
+import backend
+reload(backend)
 
 # everything implemented in python via this object
 root_object='_vedict'

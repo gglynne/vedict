@@ -38,7 +38,7 @@ class Manager(ManagerBackend):
 
     def command(self,*args):
         if len(args)==0:
-            print Manager.usage % "Vedict"
+            print (Manager.usage % "Vedict")
             return
 
         # deal with args like this: one "two two" three four "five" "six six"
@@ -46,11 +46,11 @@ class Manager(ManagerBackend):
         args=re.findall('"[^"]+"|[^ ]+',s)
         args=[a.strip('"') for a in args]
 
-        cmd=args[0]
-        if self._commands.has_key(cmd):
-            self._commands[cmd](*args[1:])
+        cmd = self._commands.get(args[0], None)
+        if cmd is None:
+            print ('command %s not found!' %cmd)
         else:
-            print 'command %s not found!' %cmd
+            cmd(*args[1:])
         pass
 
     def preview(self, *args):
@@ -103,7 +103,9 @@ class Manager(ManagerBackend):
         
     def grep(self, *args):
         enc=vim.eval('&encoding')
-        self.pattern=args[0].decode(enc)
+        #  self.pattern=args[0].decode(enc)
+        self.pattern=args[0]
+
         if len(args)==1:
             super(Manager,self).grep(self.pattern)
         elif len(args)==2:
@@ -111,7 +113,7 @@ class Manager(ManagerBackend):
         elif len(args)==3:
             super(Manager,self).grep(self.pattern, dicpattern=args[1], batches=int(args[2]))
         self.window.clear()
-	
+    
         if self.window.pwin!=None:
             self.window.pwin.open()
         vim.command('set syntax=')
@@ -133,7 +135,6 @@ class Manager(ManagerBackend):
         self.window.open()
         self.window.status('Searching...')
         fetched=0
-
         for result in super(Manager,self).fetch():
             fetched=fetched+1
             self.window.appendResult(result,enc)

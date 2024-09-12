@@ -230,8 +230,8 @@ class Window(object):
     def test():
         w=Window('w')
         w.open()
-        print w.last_buffer
-        print w.last_winnr
+        print (w.last_buffer)
+        print (w.last_winnr)
     pass
 
 
@@ -275,7 +275,8 @@ class ResultsWindow(Window):
         self._results.append(r)
 
         # 2017-11-21: workaround for neovim
-        lines = r.__repr__().encode(enc).split('\n')
+        #  lines = r.__repr__().encode(enc).split('\n')
+        lines = r.__repr__().split('\n')
         for l in lines:
             if l:
                 self.append(l)
