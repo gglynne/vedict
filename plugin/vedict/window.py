@@ -2,9 +2,14 @@
 # vim: set fileencoding=utf-8 :
 #highlight Folded guibg=darkgrey guifg=blue
 
-import vim, re
+try:
+    import vim
+except ImportError:
+    vim = None
 
-from config import use_current_window, results_bufname
+import re
+
+from vedict.config import use_current_window, results_bufname
 
 def MapAppendCascaded(lhs, rhs, mapMode):
     # Determine the map mode from the map command.
@@ -23,7 +28,7 @@ def MapAppendCascaded(lhs, rhs, mapMode):
 def vimstatus(msg):
     """ show a message in the vim status bar """
     msg=msg.replace('\\','\\\\')
-    msg=msg.replace(' ','\ ')
+    msg=msg.replace(' ',r'\ ')
     vim.command('set <buffer> laststatus=2|set statusline=%s|redraw' % msg)
 
 def getbuffer(pattern):
@@ -67,7 +72,7 @@ class Window(object):
     def status(self,msg):
         #""" show a message in the vim status bar """
         msg=msg.replace('\\','\\\\')
-        msg=msg.replace(' ','\ ')
+        msg=msg.replace(' ',r'\ ')
         self.open()
         #vim.command('set laststatus=2|set statusline=%s|redraw' % msg)
         vim.command('setlocal statusline=%s|redraw' % msg)

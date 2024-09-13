@@ -1,5 +1,5 @@
 import os, re, codecs, urllib, gzip
-import config
+from . import config
 import urllib.request
 
 def wget(url, enc_in, path_out, enc_out):

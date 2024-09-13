@@ -2,10 +2,15 @@
 # vim: set fileencoding=utf-8 :
 #highlight Folded guibg=darkgrey guifg=blue
 
-import os,re, vim
-from config import default_dic_path, batches, _types
-from window import ResultsWindow, Window
-from backend import ManagerBackend
+try:
+    import vim
+except ImportError:
+    vim = None
+
+import os,re
+from vedict.config import default_dic_path, batches, _types
+from vedict.window import ResultsWindow, Window
+from vedict.backend import ManagerBackend
 
 class Manager(ManagerBackend):
     """ vim interface to ManagerBackend """

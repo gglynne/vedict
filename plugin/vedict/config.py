@@ -41,7 +41,7 @@ toggle_key='<c-l>'
 window_maps= { 'close()':['q',], 'select':['<cr>',], 'fetch':['<space>',], }
 
 # maps dictionary varieties to their classes
-from edict import Edict, GrepFile
+from .edict import Edict, GrepFile
 _types={ 'enamdict':Edict, 'edict':Edict, 'grep':GrepFile, } # used by Manager.load to map 'variety' to class      
 
 if vim:

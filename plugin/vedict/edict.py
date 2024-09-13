@@ -3,7 +3,7 @@
 #highlight Folded guibg=darkgrey guifg=blue
 
 import os,codecs,pickle,re,random
-from config import default_dic_path
+from vedict.config import default_dic_path
 
 class EdictResult(list):
 	""" A single hit.  """
